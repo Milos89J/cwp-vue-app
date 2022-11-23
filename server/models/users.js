@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Meetyou = require('./meetyous');
+const Meetup = require('./meetups');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const config = require('../config/dev')
@@ -27,7 +27,7 @@ const userSchema = new Schema({
   info: String,
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  joinedMeetyous: [{ type: Schema.Types.ObjectId, ref: 'Meetyou' }]
+  joinedMeetups: [{ type: Schema.Types.ObjectId, ref: 'Meetup' }]
 });
 
 userSchema.pre("save", function(next){

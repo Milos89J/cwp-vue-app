@@ -1,32 +1,32 @@
 const mongoose = require('mongoose');
-const Meetyou = require('./models/meetyous');
+const Meetup = require('./models/meetups');
 const User = require('./models/users');
 const Post = require('./models/posts');
 const Thread = require('./models/threads');
-const Category = require('./models/categori')
+const Category = require('./models/categories')
 
 const data = require('./data.js');
 const config = require('./config/dev');
 
 class DB {
   constructor() {
-    this.meetyous = data.meetyous;
+    this.meetups = data.meetups;
     this.users = data.users;
     this.threads = data.threads;
     this.posts = data.posts;
-    this.categori = data.categori;
-    this.models = [Meetyou, User, Post, Thread, Category];
+    this.categories = data.categories;
+    this.models = [Meetup, User, Post, Thread, Category];
   }
 
   async cleanDb() {
      for ( let model of this.models ) {
       await model.deleteMany({}, () => {})
-      console.log(`Data ${model.collection.collectionName} Deleted!`)
+      console.log(`Data for model ${model.collection.collectionName} Deleted!`)
     }
   }
 
   async pushDataToDb() {
-    await this.categori.forEach(async (category) => {
+    await this.categories.forEach(async (category) => {
        const newCategory = new Category(category);
        await newCategory.save(() => {});
     })
@@ -35,8 +35,8 @@ class DB {
       await (new User(user)).save(() => {})
     })
 
-    await this.meetyous.forEach(async meetyou => {
-      await (new Meetyou(meetyou)).save(() => {})
+    await this.meetups.forEach(async meetup => {
+      await (new Meetup(meetup)).save(() => {})
     })
 
     await this.threads.forEach(async thread => {

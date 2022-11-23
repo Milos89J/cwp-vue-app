@@ -3,31 +3,31 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const config = require('./config/dev');
 
-require("./models/meetyous");
+require("./models/meetups");
 require("./models/users");
 require("./models/threads");
 require("./models/posts");
-require("./models/categori");
+require("./models/categories");
 
-const meetyousRoutes = require('./routes/meetyous'),
+const meetupsRoutes = require('./routes/meetups'),
       usersRoutes = require('./routes/users'),
       threadsRoutes = require('./routes/threads'),
       postsRoutes = require('./routes/posts'),
-      categoriRoutes = require('./routes/categori');
+      categoriesRoutes = require('./routes/categories');
 
 mongoose.connect(config.DB_URI, { useNewUrlParser: true })
-  .then(() => console.log('Connected!'))
+  .then(() => console.log('DB Connected!'))
   .catch(err => console.log(err));
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/api/v1/meetyous', meetyousRoutes);
+app.use('/api/v1/meetups', meetupsRoutes);
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/posts', postsRoutes);
 app.use('/api/v1/threads', threadsRoutes);
-app.use('/api/v1/categori', categoriRoutes);
+app.use('/api/v1/categories', categoriesRoutes);
 
 const PORT = process.env.PORT || 3001;
 

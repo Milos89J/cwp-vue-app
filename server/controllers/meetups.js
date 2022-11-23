@@ -1,24 +1,24 @@
-const Meetyou = require('../models/meetyous');
+const Meetup = require('../models/meetups');
 
-exports.getMeetyou = function(req, res) {
-  Meetyou.find({})
+exports.getMeetups = function(req, res) {
+  Meetup.find({})
         .populate('category')
         .populate('joinedPeople')
-        .exec((errors, meetyous) => {
+        .exec((errors, meetups) => {
 
     if (errors) {
       return res.status(422).send({errors});
     }
 
-    return res.json(meetyous);
+    return res.json(meetups);
   });
 }
 
-exports.getMeetyouById = function(req, res) {
+exports.getMeetupById = function(req, res) {
   const {id} = req.params;
 
-  Meetyou.findById(id)
-        .populate('meetyouCreator', 'name id avatar')
+  Meetup.findById(id)
+        .populate('meetupCreator', 'name id avatar')
         .populate('category')
         .populate({path: 'joinedPeople',
            options: {limit: 5, sort: {username: -1}}})
@@ -27,6 +27,6 @@ exports.getMeetyouById = function(req, res) {
       return res.status(422).send({errors});
     }
 
-    return res.json(meetyou);
+    return res.json(meetup);
   });
 }
